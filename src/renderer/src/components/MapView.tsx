@@ -57,6 +57,7 @@ export function MapView({
       center={[center.lat, center.lng]}
       zoom={DEFAULT_ZOOM}
       className="h-full w-full"
+      style={{ height: '100%', width: '100%' }}
       zoomControl
       attributionControl
     >

@@ -94,12 +94,13 @@ export function createPreviewApi(): PinpointApi {
       })
       return
     }
-    if (!canSetLocation(session) || !session.preview) {
+    const target = session.preview
+    if (!target) {
       dispatch({ type: 'APPLY_FAILED', message: 'Choose a preview pin before applying.' })
       return
     }
     await wait(180)
-    dispatch({ type: 'APPLY_SUCCEEDED', coords: session.preview, at: Date.now(), ack: 'command' })
+    dispatch({ type: 'APPLY_SUCCEEDED', coords: target, at: Date.now(), ack: 'command' })
   }
 
   const startTicks = (): void => {
@@ -135,6 +136,14 @@ export function createPreviewApi(): PinpointApi {
       dispatch({ type: 'PREVIEW', coords })
     },
     applyFixed: async () => {
+      if (session.selectedDeviceId === DEMO_IOS.id) {
+        await applyToDemo()
+        return
+      }
+      if (!canSetLocation(session)) {
+        dispatch({ type: 'APPLY_FAILED', message: 'Choose a preview pin before applying.' })
+        return
+      }
       dispatch({ type: 'SET_FIXED' })
       await applyToDemo()
     },

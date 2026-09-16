@@ -174,10 +174,10 @@ export function App() {
           </div>
         </div>
         <div className="ml-auto flex gap-2">
-          <Button tone="ghost" onClick={() => setShowSetup(true)}>
+          <Button type="button" onClick={() => setShowSetup(true)}>
             Setup
           </Button>
-          <Button tone="ghost" onClick={() => setShowSettings(true)}>
+          <Button type="button" onClick={() => setShowSettings(true)}>
             <Settings2 className="h-4 w-4" /> Prefs
           </Button>
         </div>
@@ -231,13 +231,15 @@ export function App() {
             {notice ? <p className="text-xs text-warn">{notice}</p> : null}
           </div>
           <div className="relative min-h-[320px] flex-1">
-            <MapView
-              preview={preview}
-              applied={snap.session.applied}
-              path={routePath}
-              moving={moving}
-              onPreview={(coords) => void setPreview(coords)}
-            />
+            <div className="absolute inset-0">
+              <MapView
+                preview={preview}
+                applied={snap.session.applied}
+                path={routePath}
+                moving={moving}
+                onPreview={(coords) => void setPreview(coords)}
+              />
+            </div>
           </div>
           <div className="border-t border-line p-4">
             <RoutePlanner
