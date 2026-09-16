@@ -1,0 +1,73 @@
+@import 'tailwindcss';
+@import 'leaflet/dist/leaflet.css';
+
+@theme {
+  --font-sans: 'Segoe UI', 'Helvetica Neue', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --color-ink: #12141a;
+  --color-panel: #1b1e27;
+  --color-panel-2: #222632;
+  --color-line: #313646;
+  --color-paper: #f3efe4;
+  --color-muted: #9b968b;
+  --color-pin: #f0b429;
+  --color-go: #2f9d78;
+  --color-warn: #d9822b;
+  --color-err: #d45656;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-sans);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.leaflet-container {
+  background: #1a1d24;
+  font-family: var(--font-sans);
+}
+
+.pinpoint-marker {
+  background: none;
+  border: none;
+}
+
+.pinpoint-pin {
+  width: 22px;
+  height: 22px;
+  margin-left: 3px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: #f0b429;
+  border: 2px solid #1b1e27;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+.pinpoint-pin.is-applied {
+  background: #2f9d78;
+}
+
+.pinpoint-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #f3efe4;
+  border: 3px solid #f0b429;
+  box-shadow: 0 0 0 6px rgba(240, 180, 41, 0.18);
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #313646 transparent;
+}
