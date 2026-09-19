@@ -17,7 +17,11 @@ Get the ready-to-run app from **[Releases](https://github.com/rizxe134/spo/relea
 
 1. Download `Spo-0.1.0-mac-arm64.dmg`
 2. Open the DMG and drag **Spo** to Applications
-3. First launch: right-click Spo → **Open** (unsigned build)
+3. If macOS says Spo is **“damaged”**, that’s Gatekeeper quarantine on an unsigned download — not a corrupt file. In Terminal run:
+   ```sh
+   xattr -dr com.apple.quarantine /Applications/Spo.app
+   ```
+   Then open Spo again. (Or right-click → **Open** the first time.)
 
 Intel Macs / Windows: build from source for now (`npm run dist:mac` on the matching OS).
 
