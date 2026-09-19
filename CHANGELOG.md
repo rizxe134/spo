@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 — 2026-09-19
+
+- iOS: `simulate-location set` is held as a live process (it does not exit). Timeout-on-exit is no longer treated as failure. Restore sends SIGINT and `simulate-location clear`.
+
 ## 0.1.0 — 2026-09-16
 
 Initial personal MVP.

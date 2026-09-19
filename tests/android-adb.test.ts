@@ -115,13 +115,9 @@ describe('ios sidecar stub', () => {
       if (args[0] === '-c') return { stdout: 'pymobiledevice3', stderr: '', code: 0 }
       return { stdout: 'should not run', stderr: '', code: 0 }
     })
-    const adapter = new IosSidecarAdapter('python3', runner)
+    const adapter = new IosSidecarAdapter('python3', runner, { hostPlatform: 'linux' })
     const ack = await adapter.setFixedLocation('UDID1', { lat: 1, lng: 2 })
-    if (process.platform === 'darwin') {
-      expect(ack.ok).toBe(true)
-    } else {
-      expect(ack.ok).toBe(false)
-      expect(ack.message).toMatch(/macOS|Linux|not macOS/i)
-    }
+    expect(ack.ok).toBe(false)
+    expect(ack.message).toMatch(/macOS|Linux|not macOS/i)
   })
 })

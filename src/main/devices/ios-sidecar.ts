@@ -1,4 +1,12 @@
 import type { DeviceInfo, LocationFix } from '../../shared/types'
+import {
+  ChildHoldSpawner,
+  formatIosSidecarFailure,
+  stopHeld,
+  waitForHeldStart,
+  type HoldHandle,
+  type HoldSpawner
+} from './held-process'
 import { ProcessRunner } from './runner'
 import type {
   AdapterAvailability,
@@ -50,16 +58,32 @@ export function parsePymobiledeviceList(output: string): DeviceInfo[] {
   }
 }
 
+export interface IosSidecarOptions {
+  holds?: HoldSpawner
+  hostPlatform?: NodeJS.Platform
+  settleMs?: number
+}
+
 export class IosSidecarAdapter implements DeviceAdapter {
   readonly platform = 'ios' as const
+  private held: HoldHandle | null = null
+  private heldFix: LocationFix | null = null
+  private readonly holds: HoldSpawner
+  private readonly hostPlatform: NodeJS.Platform
+  private readonly settleMs: number
 
   constructor(
     private readonly pythonPath: string,
-    private readonly runner: CommandRunner = new ProcessRunner()
-  ) {}
+    private readonly runner: CommandRunner = new ProcessRunner(),
+    options: IosSidecarOptions = {}
+  ) {
+    this.holds = options.holds ?? new ChildHoldSpawner()
+    this.hostPlatform = options.hostPlatform ?? process.platform
+    this.settleMs = options.settleMs ?? 800
+  }
 
   async isAvailable(): Promise<AdapterAvailability> {
-    if (process.platform !== 'darwin') {
+    if (this.hostPlatform !== 'darwin') {
       const probe = await this.probeModule()
       if (!probe.installed) {
         return {
@@ -125,41 +149,88 @@ export class IosSidecarAdapter implements DeviceAdapter {
         message: availability.message
       }
     }
-    const result = await this.runner.run(this.pythonPath, buildIosSetArgs(fix), { timeoutMs: 20_000 })
-    if (result.code !== 0) {
+
+    if (this.held?.alive && sameFix(this.heldFix, fix)) {
+      return {
+        ok: true,
+        kind: 'command',
+        message: 'Sidecar is still holding the simulated location. The set process is not required to exit.'
+      }
+    }
+
+    await stopHeld(this.held)
+    this.held = null
+
+    let handle: HoldHandle
+    try {
+      handle = this.holds.start(this.pythonPath, buildIosSetArgs(fix))
+    } catch (error) {
       return {
         ok: false,
         kind: 'command',
-        message:
-          result.stderr.trim() ||
-          result.stdout.trim() ||
-          `pymobiledevice3 refused simulate-location set for ${deviceId}.`
+        message: error instanceof Error ? error.message : String(error)
       }
     }
+
+    const started = await waitForHeldStart(handle, { settleMs: this.settleMs })
+    if (!started.ok) {
+      this.held = null
+      this.heldFix = null
+      return { ok: false, kind: 'command', message: started.message }
+    }
+
+    this.held = handle
+    this.heldFix = fix
     return {
       ok: true,
       kind: 'command',
       message:
-        'Sidecar acknowledged the DVT simulate-location command. That is not a GPS reading from Maps or Find My.'
+        `${started.message} This is not a GPS reading from Maps or Find My. Restore sends Ctrl+C / clear.`
     }
   }
 
   async restore(deviceId: string): Promise<PrepareResult> {
     const availability = await this.isAvailable()
+    const hadHeld = this.held != null
+    await stopHeld(this.held)
+    this.held = null
+    this.heldFix = null
+
     if (!availability.available) {
-      return { ok: false, message: availability.message }
+      return hadHeld
+        ? { ok: true, message: 'Stopped the holding simulate-location process. clear could not run on this host.' }
+        : { ok: false, message: availability.message }
     }
-    const result = await this.runner.run(this.pythonPath, buildIosClearArgs(), { timeoutMs: 20_000 })
-    if (result.code !== 0) {
-      return {
-        ok: false,
-        message:
-          result.stderr.trim() ||
-          result.stdout.trim() ||
-          `Could not clear the simulated location on ${deviceId}. Cached apps may keep the last fix until they refresh.`
+
+    try {
+      const result = await this.runner.run(this.pythonPath, buildIosClearArgs(), { timeoutMs: 15_000 })
+      if (result.code === 0) {
+        return {
+          ok: true,
+          message: 'Stopped the holding set process and sent simulate-location clear. Cached apps may keep a reading for a while.'
+        }
       }
+      const detail = formatIosSidecarFailure(
+        result.stdout,
+        result.stderr,
+        `simulate-location clear failed for ${deviceId}.`
+      )
+      if (hadHeld) {
+        return {
+          ok: true,
+          message: `Stopped the holding set process (Ctrl+C). clear reported: ${detail}`
+        }
+      }
+      return { ok: false, message: detail }
+    } catch (error) {
+      if (hadHeld) {
+        return {
+          ok: true,
+          message: `Stopped the holding set process. clear did not finish: ${error instanceof Error ? error.message : String(error)}`
+        }
+      }
+      return { ok: false, message: error instanceof Error ? error.message : String(error) }
     }
-    return { ok: true, message: 'Sent simulate-location clear. Other apps may keep a cached reading for a while.' }
   }
 
   async startWifiHandoff(): Promise<WifiHandoffResult> {
@@ -182,4 +253,9 @@ export class IosSidecarAdapter implements DeviceAdapter {
       return { installed: false, detail: error instanceof Error ? error.message : String(error) }
     }
   }
+}
+
+function sameFix(a: LocationFix | null, b: LocationFix): boolean {
+  if (!a) return false
+  return Math.abs(a.lat - b.lat) < 1e-7 && Math.abs(a.lng - b.lng) < 1e-7
 }

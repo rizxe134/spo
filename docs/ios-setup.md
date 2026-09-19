@@ -32,6 +32,8 @@ The UI never pretends a location was applied when the sidecar cannot run.
    python3 -m pymobiledevice3 developer dvt simulate-location clear
    ```
 
+   `simulate-location set` is long-lived: it stays running to hold the mock (Ctrl+C clears it). Pinpoint treats a successful start as the ack and keeps that process until Restore, Update, or quit. A 20-second wait-for-exit is not used for set. If Developer Mode or the developer-disk mounter is not ready, stderr is shown in the session error.
+
 6. A DVT acknowledgement is not a Maps / Find My reading. Cached apps can keep the last fix after clear. An iPhone reboot is a further recovery step if the developer simulation sticks.
 
 ## Windows
