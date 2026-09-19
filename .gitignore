@@ -10,3 +10,16 @@ artifacts/
 .env
 .env.local
 *.tsbuildinfo
+
+# local / secrets (never publish)
+.env.*
+!.env.example
+*.pem
+*.p12
+*.key
+*.mobileprovision
+pinpoint-store.json
+**/pinpoint-store.json
+.idea/
+.vscode/
+*.icns
