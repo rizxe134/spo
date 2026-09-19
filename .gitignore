@@ -23,3 +23,6 @@ pinpoint-store.json
 .idea/
 .vscode/
 *.icns
+
+spo-github.bundle
+spo-github-src.tar.gz
