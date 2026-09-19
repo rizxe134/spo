@@ -58,6 +58,37 @@ npm run build
 npm start
 ```
 
+## Install Spo as a Mac app (Applications / Launchpad)
+
+Build this **on the Mac** you already use for Spo. A Linux machine cannot produce a trusted, double-clickable `Spo.app` for you. The package is **unsigned** — there is no Apple Developer signing or notarization in this personal build.
+
+```sh
+npm install
+npm test
+npm run dist:mac
+```
+
+That compiles the Electron app and writes an unsigned package under `release/`:
+
+- `release/mac/Spo.app` or `release/mac-arm64/Spo.app` (Apple Silicon) / `release/mac-x64/Spo.app` (Intel)
+- `release/Spo-0.1.0-mac-arm64.dmg` (or the matching `x64` dmg)
+
+Then:
+
+1. Open the `.dmg` **or** copy `Spo.app` into `/Applications`.
+2. Because the app is unsigned, Gatekeeper may block the first launch. In Finder, **right-click Spo.app → Open**, then click Open.  
+   If macOS still quarantines a download, you can also run:  
+   `xattr -dr com.apple.quarantine /Applications/Spo.app`
+3. After that, Spo appears in Applications and Launchpad like any other app.
+
+Other scripts:
+
+- `npm run pack` — unpacked app directory for the **current** OS (`release/…/Spo.app` on a Mac)
+- `npm run dist` — installer for the **current** OS
+- `npm run dist:mac` — macOS `.app` + `.dmg` (run this on a Mac)
+
+Do not treat a cloud or Linux `release/` folder as a Mac installer.
+
 ## Phone setup
 
 - Android (the path this project actually implements): [docs/android-setup.md](docs/android-setup.md)

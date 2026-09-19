@@ -12,8 +12,50 @@
     "start": "electron-vite preview",
     "preview": "vite --config vite.preview.config.ts",
     "build": "electron-vite build",
+    "pack": "electron-vite build && electron-builder --dir --publish never",
+    "dist": "electron-vite build && electron-builder --publish never",
+    "dist:mac": "electron-vite build && electron-builder --mac --publish never",
     "test": "vitest run",
     "test:watch": "vitest"
+  },
+  "build": {
+    "appId": "com.spo.app",
+    "productName": "Spo",
+    "copyright": "Copyright © 2026 Rishabh Kumar Singh",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*"
+    ],
+    "asar": true,
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        "dmg",
+        "dir"
+      ],
+      "identity": null,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
+      "notarize": false,
+      "artifactName": "${productName}-${version}-mac-${arch}.${ext}"
+    },
+    "dmg": {
+      "title": "Spo",
+      "artifactName": "${productName}-${version}-mac-${arch}.${ext}"
+    },
+    "linux": {
+      "target": [
+        "dir"
+      ],
+      "category": "Utility"
+    },
+    "win": {
+      "target": [
+        "dir"
+      ]
+    }
   },
   "dependencies": {
     "leaflet": "^1.9.4",
@@ -30,6 +72,7 @@
     "@types/react-dom": "^19.1.5",
     "@vitejs/plugin-react": "^4.5.0",
     "electron": "^36.2.1",
+    "electron-builder": "^26.0.12",
     "electron-vite": "^3.1.0",
     "tailwindcss": "^4.1.7",
     "typescript": "^5.8.3",

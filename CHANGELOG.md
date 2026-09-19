@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 — 2026-09-19
+
+- macOS packaging via electron-builder: unsigned `Spo.app` and `.dmg` from `npm run dist:mac` (build on a Mac; Gatekeeper right-click → Open)
+
 ## 0.1.2 — 2026-09-19
 
 - Rebrand user-facing name from Pinpoint to Spo
