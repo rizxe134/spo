@@ -16,6 +16,7 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
+    publicDir: resolve('src/renderer/public'),
     resolve: {
       alias: {
         '@shared': shared,

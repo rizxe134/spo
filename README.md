@@ -73,6 +73,8 @@ That compiles the Electron app and writes an unsigned package under `release/`:
 - `release/mac/Spo.app` or `release/mac-arm64/Spo.app` (Apple Silicon) / `release/mac-x64/Spo.app` (Intel)
 - `release/Spo-0.1.0-mac-arm64.dmg` (or the matching `x64` dmg)
 
+The Dock / Applications icon is the 8-bit cyber-green ghost in `build/icon.png`. electron-builder turns that PNG into the macOS `.icns` when you run `dist:mac` on a Mac.
+
 Then:
 
 1. Open the `.dmg` **or** copy `Spo.app` into `/Applications`.

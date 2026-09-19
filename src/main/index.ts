@@ -21,6 +21,14 @@ function preloadScript(): string {
   return existsSync(bundled) ? bundled : fallback
 }
 
+function windowIcon(): string | undefined {
+  const candidates = [
+    join(__dirname, '../renderer/icon.png'),
+    join(__dirname, '../../build/icon.png')
+  ]
+  return candidates.find((path) => existsSync(path))
+}
+
 function createWindow(): BrowserWindow {
   const mainWindow = new BrowserWindow({
     width: 1320,
@@ -29,6 +37,7 @@ function createWindow(): BrowserWindow {
     minHeight: 680,
     title: 'Spo',
     backgroundColor: '#050705',
+    icon: windowIcon(),
     autoHideMenuBar: true,
     webPreferences: {
       preload: preloadScript(),

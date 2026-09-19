@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { MapPin, Settings2 } from 'lucide-react'
+import { Settings2 } from 'lucide-react'
 import { APP_NAME, APP_VERSION, DEFAULT_CENTER, MAX_ROUTE_STOPS } from '@shared/constants'
 import { formatCoords, parseCoordinatePair } from '@shared/coordinates'
 import type { AppSettings, AppSnapshot, Coordinates, PlaceHit } from '@shared/types'
@@ -171,7 +171,7 @@ export function App() {
     <div className="app-shell">
       <header className="app-chrome flex flex-wrap items-center gap-3 border-b border-line px-4 py-3">
         <div className="flex items-center gap-2">
-          <MapPin className="h-5 w-5 text-pin" />
+          <img src="./icon.png" alt="" className="spo-logo" width={32} height={32} />
           <div>
             <div className="spo-mark text-xl leading-none">{APP_NAME}</div>
             <div className="text-[11px] text-muted">v{APP_VERSION} · personal USB location pin</div>

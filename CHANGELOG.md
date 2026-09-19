@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4 — 2026-09-19
+
+- App icon: 8-bit cyber-green ghost pin (Dock / Applications via electron-builder, header, favicon)
+
 ## 0.1.3 — 2026-09-19
 
 - macOS packaging via electron-builder: unsigned `Spo.app` and `.dmg` from `npm run dist:mac` (build on a Mac; Gatekeeper right-click → Open)
