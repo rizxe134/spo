@@ -27,8 +27,8 @@ function createWindow(): BrowserWindow {
     height: 860,
     minWidth: 980,
     minHeight: 680,
-    title: 'Pinpoint',
-    backgroundColor: '#12141a',
+    title: 'Spo',
+    backgroundColor: '#050705',
     autoHideMenuBar: true,
     webPreferences: {
       preload: preloadScript(),
@@ -141,11 +141,11 @@ app.on('before-quit', (event) => {
       buttons: ['Stay open', 'Quit anyway'],
       defaultId: 0,
       cancelId: 0,
-      title: 'Pinpoint could not restore',
+      title: 'Spo could not restore',
       message: 'Restore did not finish. The phone may still be mocked.',
       detail:
         manager!.snapshot().session.lastError ??
-        'Quit anyway keeps a local recovery record. Pinpoint will not resume automatically next launch.'
+        'Quit anyway keeps a local recovery record. Spo will not resume automatically next launch.'
     })
     if (choice.response === 1) {
       allowQuit = true

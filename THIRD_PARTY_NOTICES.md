@@ -1,6 +1,6 @@
 # Third-party notices
 
-Pinpoint is MIT-licensed original code. It talks to public services and optional helpers that have their own terms.
+Spo is MIT-licensed original code. It talks to public services and optional helpers that have their own terms.
 
 - OpenStreetMap tile data © OpenStreetMap contributors, ODbL. https://www.openstreetmap.org/copyright
 - Photon geocoder (default `https://photon.komoot.io/api/`) — public demo, no availability guarantee

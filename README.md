@@ -1,4 +1,4 @@
-# Pinpoint
+# Spo
 
 A personal Electron app for pinning a phone GPS location or playing a short road route over USB. Search a place, drag a pin, or type coordinates, then explicitly **Set location** or **Update location**. Selecting a pin only changes the preview.
 
@@ -91,4 +91,4 @@ docs/           phone setup
 
 ## Honesty
 
-USB unplug, sleep, force-quit, and a crashed helper cannot guarantee an immediate real GPS. Android’s helper can keep the last mock without a cable. After Pinpoint restarts, a saved recovery record is never auto-resumed — use Retry location or Restore on the same phone.
+USB unplug, sleep, force-quit, and a crashed helper cannot guarantee an immediate real GPS. Android’s helper can keep the last mock without a cable. After Spo restarts, a saved recovery record is never auto-resumed — use Retry location or Restore on the same phone.

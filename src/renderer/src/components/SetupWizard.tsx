@@ -22,7 +22,7 @@ export function SetupWizard({
         <p className="text-xs tracking-[0.18em] text-pin uppercase">First-run checklist</p>
         <h2 className="mt-1 font-serif text-3xl">Set up this computer and phone</h2>
         <p className="mt-2 text-sm text-muted">
-          Pick the pair you actually have. Pinpoint does not install drivers or change phone settings
+          Pick the pair you actually have. Spo does not install drivers or change phone settings
           for you — it only talks to ADB or the iOS sidecar after you finish these steps.
         </p>
         <div className="mt-4 grid gap-3 sm:grid-cols-2">

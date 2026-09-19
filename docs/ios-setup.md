@@ -1,6 +1,6 @@
 # iPhone setup (macOS sidecar)
 
-Pinpoint’s iOS adapter uses the same TypeScript interface as Android (`discover` / `prepare` / `setFixedLocation` / `restore`). On this Linux build it is a **bounded stub**.
+Spo’s iOS adapter uses the same TypeScript interface as Android (`discover` / `prepare` / `setFixedLocation` / `restore`). On this Linux build it is a **bounded stub**.
 
 Developer location simulation goes through a [pymobiledevice3](https://github.com/doronz88/pymobiledevice3) sidecar. That stack is oriented around macOS, Developer Mode, and Apple’s DVT services. It is not something this personal MVP can complete inside a Linux cloud agent.
 
@@ -24,15 +24,15 @@ The UI never pretends a location was applied when the sidecar cannot run.
    python3 -m pymobiledevice3 usbmux list
    ```
 
-4. Point Pinpoint → Prefs → Python path at that interpreter if it is not `python3`.
-5. Commands Pinpoint will call when `isAvailable()` is true:
+4. Point Spo → Prefs → Python path at that interpreter if it is not `python3`.
+5. Commands Spo will call when `isAvailable()` is true:
 
    ```sh
    python3 -m pymobiledevice3 developer dvt simulate-location set -- <lat> <lng>
    python3 -m pymobiledevice3 developer dvt simulate-location clear
    ```
 
-   `simulate-location set` is long-lived: it stays running to hold the mock (Ctrl+C clears it). Pinpoint treats a successful start as the ack and keeps that process until Restore, Update, or quit. A 20-second wait-for-exit is not used for set. If Developer Mode or the developer-disk mounter is not ready, stderr is shown in the session error.
+   `simulate-location set` is long-lived: it stays running to hold the mock (Ctrl+C clears it). Spo treats a successful start as the ack and keeps that process until Restore, Update, or quit. A 20-second wait-for-exit is not used for set. If Developer Mode or the developer-disk mounter is not ready, stderr is shown in the session error.
 
 6. A DVT acknowledgement is not a Maps / Find My reading. Cached apps can keep the last fix after clear. An iPhone reboot is a further recovery step if the developer simulation sticks.
 
@@ -42,4 +42,4 @@ Install Apple Mobile Device Support (iTunes or Apple Devices) so the phone enume
 
 ## Linux
 
-`usbmuxd` may list a phone. Treat that as detection only. Do not expect Set location to succeed until you run Pinpoint on a Mac with the sidecar paired.
+`usbmuxd` may list a phone. Treat that as detection only. Do not expect Set location to succeed until you run Spo on a Mac with the sidecar paired.

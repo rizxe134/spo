@@ -1,4 +1,4 @@
-export const APP_NAME = 'Pinpoint'
+export const APP_NAME = 'Spo'
 export const APP_VERSION = '0.1.0'
 
 export const DEFAULT_PHOTON_URL = 'https://photon.komoot.io/api/'

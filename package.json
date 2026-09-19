@@ -1,7 +1,8 @@
 {
-  "name": "pinpoint",
+  "name": "spo",
+  "productName": "Spo",
   "version": "0.1.0",
-  "description": "Personal desktop app to pin a phone GPS location or play a road route over USB.",
+  "description": "Spo — personal desktop app to pin a phone GPS location or play a road route over USB.",
   "author": "Rishabh Kumar Singh",
   "license": "MIT",
   "type": "module",

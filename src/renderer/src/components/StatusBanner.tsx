@@ -19,7 +19,7 @@ export function StatusBanner({ session }: { session: SessionState }) {
       {disconnected ? (
         <div className="rounded-md border border-warn/50 bg-warn/10 px-3 py-2 text-sm">
           {session.lastError ??
-            'The phone is not reachable. Pinpoint did not restore the mock. Reconnect the same device or Restore after it returns.'}
+            'The phone is not reachable. Spo did not restore the mock. Reconnect the same device or Restore after it returns.'}
         </div>
       ) : null}
       {recovery && session.phase === 'disconnected' ? (

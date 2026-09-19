@@ -97,7 +97,7 @@ export class IosSidecarAdapter implements DeviceAdapter {
         available: false,
         runtime: 'limited',
         message:
-          'pymobiledevice3 is importable, but this host is not macOS. Discovery may list a phone; Set location will fail until you run Pinpoint on a Mac with Developer Mode paired. See docs/ios-setup.md.'
+          'pymobiledevice3 is importable, but this host is not macOS. Discovery may list a phone; Set location will fail until you run Spo on a Mac with Developer Mode paired. See docs/ios-setup.md.'
       }
     }
 

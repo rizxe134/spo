@@ -173,7 +173,7 @@ export function App() {
         <div className="flex items-center gap-2">
           <MapPin className="h-5 w-5 text-pin" />
           <div>
-            <div className="font-serif text-xl leading-none">{APP_NAME}</div>
+            <div className="spo-mark text-xl leading-none">{APP_NAME}</div>
             <div className="text-[11px] text-muted">v{APP_VERSION} · personal USB location pin</div>
           </div>
         </div>

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2 — 2026-09-19
+
+- Rebrand user-facing name from Pinpoint to Spo
+- Black + cyber green theme (dark panels, neon green accents, readable body text)
+
 ## 0.1.1 — 2026-09-19
 
 - iOS: `simulate-location set` is held as a live process (it does not exit). Timeout-on-exit is no longer treated as failure. Restore sends SIGINT and `simulate-location clear`.

@@ -80,7 +80,7 @@ export function MapView({
       {path.length > 1 ? (
         <Polyline
           positions={path.map((point) => [point.lat, point.lng] as [number, number])}
-          pathOptions={{ color: '#f0b429', weight: 4, opacity: 0.85 }}
+          pathOptions={{ color: '#3dff6a', weight: 4, opacity: 0.85 }}
         />
       ) : null}
       {preview ? (

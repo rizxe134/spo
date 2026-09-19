@@ -3,17 +3,17 @@
 
 @theme {
   --font-sans: 'Segoe UI', 'Helvetica Neue', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
-  --color-ink: #12141a;
-  --color-panel: #1b1e27;
-  --color-panel-2: #222632;
-  --color-line: #313646;
-  --color-paper: #f3efe4;
-  --color-muted: #9b968b;
-  --color-pin: #f0b429;
-  --color-go: #2f9d78;
-  --color-warn: #d9822b;
-  --color-err: #d45656;
+  --font-serif: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+  --color-ink: #050705;
+  --color-panel: #0b0f0b;
+  --color-panel-2: #101610;
+  --color-line: #1c3a22;
+  --color-paper: #d7ead9;
+  --color-muted: #7f9a84;
+  --color-pin: #3dff6a;
+  --color-go: #3dff6a;
+  --color-warn: #e8c14a;
+  --color-err: #ff6b6b;
 }
 
 html,
@@ -61,7 +61,7 @@ body,
   min-height: 0;
   overflow: auto;
   isolation: isolate;
-  background: var(--color-ink);
+  background: var(--color-panel);
 }
 
 .app-main {
@@ -98,8 +98,23 @@ select {
   font: inherit;
 }
 
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 1px solid var(--color-pin);
+  box-shadow: 0 0 0 3px rgba(61, 255, 106, 0.18);
+}
+
+.spo-mark {
+  font-family: var(--font-serif);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-pin);
+  text-shadow: 0 0 12px rgba(61, 255, 106, 0.35);
+}
+
 .leaflet-container {
-  background: #1a1d24;
+  background: #070a07;
   font-family: var(--font-sans);
 }
 
@@ -120,25 +135,26 @@ select {
   margin-left: 3px;
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
-  background: #f0b429;
-  border: 2px solid #1b1e27;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+  background: #3dff6a;
+  border: 2px solid #050705;
+  box-shadow: 0 0 10px rgba(61, 255, 106, 0.55);
 }
 
 .pinpoint-pin.is-applied {
-  background: #2f9d78;
+  background: #1aa34a;
+  box-shadow: 0 0 10px rgba(26, 163, 74, 0.45);
 }
 
 .pinpoint-dot {
   width: 14px;
   height: 14px;
   border-radius: 999px;
-  background: #f3efe4;
-  border: 3px solid #f0b429;
-  box-shadow: 0 0 0 6px rgba(240, 180, 41, 0.18);
+  background: #d7ead9;
+  border: 3px solid #3dff6a;
+  box-shadow: 0 0 0 6px rgba(61, 255, 106, 0.18);
 }
 
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: #313646 transparent;
+  scrollbar-color: #1c3a22 transparent;
 }

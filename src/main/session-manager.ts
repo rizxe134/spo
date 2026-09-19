@@ -150,7 +150,7 @@ export class SessionManager {
     if (!device) {
       this.dispatch({
         type: 'RESTORE_FAILED',
-        message: 'The phone is unplugged. Reconnect the same device before Pinpoint can send Restore.'
+        message: 'The phone is unplugged. Reconnect the same device before Spo can send Restore.'
       })
       return false
     }

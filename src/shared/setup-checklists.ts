@@ -40,7 +40,7 @@ export const SETUP_PROFILES: SetupProfile[] = [
       {
         id: 'mac-iphone-sidecar',
         title: 'Install the pymobiledevice3 sidecar on macOS',
-        detail: 'Pinpoint looks for `python3 -m pymobiledevice3`. See docs/ios-setup.md. The Linux environment cannot complete DVT location simulation.'
+        detail: 'Spo looks for `python3 -m pymobiledevice3`. See docs/ios-setup.md. The Linux environment cannot complete DVT location simulation.'
       }
     ]
   },
@@ -63,12 +63,12 @@ export const SETUP_PROFILES: SetupProfile[] = [
       {
         id: 'mac-android-adb',
         title: 'Install platform-tools',
-        detail: 'Put `adb` on PATH, or set the ADB path in Pinpoint settings. `adb devices` should list the serial as device.'
+        detail: 'Put `adb` on PATH, or set the ADB path in Spo settings. `adb devices` should list the serial as device.'
       },
       {
         id: 'mac-android-helper',
         title: 'Install Appium Settings and select it as the mock location app',
-        detail: 'Install io.appium.settings, then Developer options → Select mock location app. Pinpoint can also run `appops set … android:mock_location allow`.'
+        detail: 'Install io.appium.settings, then Developer options → Select mock location app. Spo can also run `appops set … android:mock_location allow`.'
       }
     ]
   },
@@ -96,7 +96,7 @@ export const SETUP_PROFILES: SetupProfile[] = [
       {
         id: 'win-iphone-limit',
         title: 'Expect a stub until the sidecar is present',
-        detail: 'Without pymobiledevice3, Pinpoint lists no iPhones and explains the missing runtime instead of pretending a fix was applied.'
+        detail: 'Without pymobiledevice3, Spo lists no iPhones and explains the missing runtime instead of pretending a fix was applied.'
       }
     ]
   },
@@ -119,7 +119,7 @@ export const SETUP_PROFILES: SetupProfile[] = [
       {
         id: 'win-android-adb',
         title: 'Install Android platform-tools',
-        detail: 'Add platform-tools to PATH or paste the adb.exe path in Settings. Pinpoint shells to that binary only.'
+        detail: 'Add platform-tools to PATH or paste the adb.exe path in Settings. Spo shells to that binary only.'
       },
       {
         id: 'win-android-helper',
@@ -147,7 +147,7 @@ export const SETUP_PROFILES: SetupProfile[] = [
       {
         id: 'linux-android-helper',
         title: 'Install Appium Settings',
-        detail: 'Pinpoint will refuse Set location if io.appium.settings is missing, rather than inventing a mock provider.'
+        detail: 'Spo will refuse Set location if io.appium.settings is missing, rather than inventing a mock provider.'
       }
     ]
   },
@@ -160,12 +160,12 @@ export const SETUP_PROFILES: SetupProfile[] = [
       {
         id: 'linux-iphone-usbmux',
         title: 'Install usbmuxd if you only need detection',
-        detail: 'A listed iPhone is not enough. DVT simulate-location typically fails on Linux; Pinpoint reports that instead of faking success.'
+        detail: 'A listed iPhone is not enough. DVT simulate-location typically fails on Linux; Spo reports that instead of faking success.'
       },
       {
         id: 'linux-iphone-macos',
         title: 'Use a Mac for a real iOS session',
-        detail: 'See docs/ios-setup.md for the pymobiledevice3 steps Pinpoint will call when that runtime exists.'
+        detail: 'See docs/ios-setup.md for the pymobiledevice3 steps Spo will call when that runtime exists.'
       }
     ]
   }
