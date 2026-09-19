@@ -17,7 +17,7 @@ export function SetupWizard({
   const profile = setupProfile(os, phone)
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
       <div className="max-h-[90vh] w-full max-w-2xl overflow-auto rounded-xl border border-line bg-panel p-6 shadow-2xl scrollbar-thin">
         <p className="text-xs tracking-[0.18em] text-pin uppercase">First-run checklist</p>
         <h2 className="mt-1 font-serif text-3xl">Set up this computer and phone</h2>

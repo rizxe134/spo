@@ -15,7 +15,7 @@ export function SettingsDialog({
   const [draft, setDraft] = useState(settings)
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
       <div className="w-full max-w-lg rounded-xl border border-line bg-panel p-6">
         <h2 className="font-serif text-2xl">Preferences</h2>
         <p className="mt-1 text-sm text-muted">

@@ -168,8 +168,8 @@ export function App() {
   }
 
   return (
-    <div className="flex h-full flex-col">
-      <header className="relative z-20 flex flex-wrap items-center gap-3 border-b border-line bg-ink px-4 py-3">
+    <div className="app-shell">
+      <header className="app-chrome flex flex-wrap items-center gap-3 border-b border-line px-4 py-3">
         <div className="flex items-center gap-2">
           <MapPin className="h-5 w-5 text-pin" />
           <div>
@@ -187,8 +187,8 @@ export function App() {
         </div>
       </header>
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-[320px_minmax(0,1fr)]">
-        <aside className="scrollbar-thin space-y-5 overflow-auto border-b border-line p-4 lg:border-r lg:border-b-0">
+      <div className="app-body">
+        <aside className="app-sidebar scrollbar-thin space-y-5 border-b border-line p-4 lg:border-r lg:border-b-0">
           <StatusBanner session={snap.session} />
           <DeviceList
             devices={snap.devices}
@@ -219,8 +219,8 @@ export function App() {
           />
         </aside>
 
-        <main className="flex min-h-[480px] flex-col">
-          <div className="relative z-10 space-y-3 border-b border-line bg-ink p-4">
+        <main className="app-main">
+          <div className="app-chrome space-y-3 border-b border-line p-4">
             <SearchBar
               onSearch={(query) => api.search(query)}
               onPick={(hit: PlaceHit) => void setPreview({ lat: hit.lat, lng: hit.lng }, hit.label)}
@@ -234,18 +234,16 @@ export function App() {
             />
             {notice ? <p className="text-xs text-warn">{notice}</p> : null}
           </div>
-          <div className="relative z-0 min-h-[320px] flex-1 overflow-hidden">
-            <div className="absolute inset-0">
-              <MapView
-                preview={preview}
-                applied={snap.session.applied}
-                path={routePath}
-                moving={moving}
-                onPreview={(coords) => void setPreview(coords)}
-              />
-            </div>
+          <div className="app-map-slot">
+            <MapView
+              preview={preview}
+              applied={snap.session.applied}
+              path={routePath}
+              moving={moving}
+              onPreview={(coords) => void setPreview(coords)}
+            />
           </div>
-          <div className="border-t border-line p-4">
+          <div className="app-chrome border-t border-line p-4">
             <RoutePlanner
               stops={stops}
               plannedMeters={plannedMeters}

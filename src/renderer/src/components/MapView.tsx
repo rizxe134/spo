@@ -28,6 +28,15 @@ function ClickHandler({ onPreview }: { onPreview: (coords: Coordinates) => void 
   return null
 }
 
+function FitContainer() {
+  const map = useMap()
+  useEffect(() => {
+    const id = window.requestAnimationFrame(() => map.invalidateSize())
+    return () => window.cancelAnimationFrame(id)
+  }, [map])
+  return null
+}
+
 function Recenter({ target }: { target: Coordinates | null }) {
   const map = useMap()
   useEffect(() => {
@@ -53,11 +62,11 @@ export function MapView({
   const center = preview ?? applied ?? DEFAULT_CENTER
 
   return (
+    <div className="pinpoint-map">
     <MapContainer
       center={[center.lat, center.lng]}
       zoom={DEFAULT_ZOOM}
-      className="h-full w-full"
-      style={{ height: '100%', width: '100%' }}
+      className="pinpoint-map-canvas"
       zoomControl
       attributionControl
     >
@@ -65,6 +74,7 @@ export function MapView({
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      <FitContainer />
       <ClickHandler onPreview={onPreview} />
       <Recenter target={moving ?? preview} />
       {path.length > 1 ? (
@@ -91,5 +101,6 @@ export function MapView({
       ) : null}
       {moving ? <Marker position={[moving.lat, moving.lng]} icon={movingIcon} /> : null}
     </MapContainer>
+    </div>
   )
 }
