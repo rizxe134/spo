@@ -60,7 +60,12 @@ export function SessionBar({
       ) : null}
       {session.lastError ? <p className="text-xs text-err">{session.lastError}</p> : null}
       <div className="flex flex-wrap gap-2">
-        <Button tone="warn" disabled={!canApply || busy} onClick={onApply}>
+        <Button
+          tone="warn"
+          disabled={!canApply || busy}
+          onClick={onApply}
+          title={!canApply ? 'Drop or preview a pin first. Applying is explicit.' : label}
+        >
           {label}
         </Button>
         <Button tone="danger" disabled={!canRestore(session) || busy} onClick={onRestore}>

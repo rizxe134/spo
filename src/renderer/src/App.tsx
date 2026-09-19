@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { MapPin, Settings2 } from 'lucide-react'
-import { APP_NAME, APP_VERSION, MAX_ROUTE_STOPS } from '@shared/constants'
+import { APP_NAME, APP_VERSION, DEFAULT_CENTER, MAX_ROUTE_STOPS } from '@shared/constants'
 import { formatCoords, parseCoordinatePair } from '@shared/coordinates'
 import type { AppSettings, AppSnapshot, Coordinates, PlaceHit } from '@shared/types'
 import { getApi } from './api'
@@ -36,7 +36,11 @@ export function App() {
     void api.getState().then((state) => {
       setSnap(state)
       setShowSetup(!state.settings.setupComplete)
-      syncInputs(state.session.preview)
+      if (state.session.preview) {
+        syncInputs(state.session.preview)
+      } else {
+        void api.preview(DEFAULT_CENTER)
+      }
     })
     return api.onState((state) => {
       setSnap(state)
@@ -165,7 +169,7 @@ export function App() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex flex-wrap items-center gap-3 border-b border-line px-4 py-3">
+      <header className="relative z-20 flex flex-wrap items-center gap-3 border-b border-line bg-ink px-4 py-3">
         <div className="flex items-center gap-2">
           <MapPin className="h-5 w-5 text-pin" />
           <div>
@@ -216,7 +220,7 @@ export function App() {
         </aside>
 
         <main className="flex min-h-[480px] flex-col">
-          <div className="space-y-3 border-b border-line p-4">
+          <div className="relative z-10 space-y-3 border-b border-line bg-ink p-4">
             <SearchBar
               onSearch={(query) => api.search(query)}
               onPick={(hit: PlaceHit) => void setPreview({ lat: hit.lat, lng: hit.lng }, hit.label)}
@@ -230,7 +234,7 @@ export function App() {
             />
             {notice ? <p className="text-xs text-warn">{notice}</p> : null}
           </div>
-          <div className="relative min-h-[320px] flex-1">
+          <div className="relative z-0 min-h-[320px] flex-1 overflow-hidden">
             <div className="absolute inset-0">
               <MapView
                 preview={preview}
