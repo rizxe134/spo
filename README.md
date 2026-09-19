@@ -1,4 +1,9 @@
+<p align="center">
+  <img src="docs/logo.png" alt="Spo logo — 8-bit cyber-green ghost pin" width="160" height="160" />
+</p>
+
 # Spo
+
 
 A personal Electron app for pinning a phone GPS location or playing a short road route over USB. Search a place, drag a pin, or type coordinates, then explicitly **Set location** or **Update location**. Selecting a pin only changes the preview.
 
