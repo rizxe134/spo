@@ -1,4 +1,5 @@
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process'
+import { childEnv } from '../runtime-path'
 
 export interface HoldHandle {
   readonly pid?: number
@@ -70,7 +71,7 @@ export class ChildHoldHandle implements HoldHandle {
 
 export class ChildHoldSpawner implements HoldSpawner {
   start(file: string, args: string[]): HoldHandle {
-    const child = spawn(file, args, { windowsHide: true })
+    const child = spawn(file, args, { windowsHide: true, env: childEnv() })
     return new ChildHoldHandle(child)
   }
 }

@@ -5,9 +5,14 @@ import type { AdapterAvailability, DeviceAdapter, WifiHandoffResult } from './ty
 
 export class DeviceRegistry {
   constructor(
-    private readonly android: AndroidAdbAdapter,
-    private readonly ios: IosSidecarAdapter
+    private android: AndroidAdbAdapter,
+    private ios: IosSidecarAdapter
   ) {}
+
+  async replaceIos(next: IosSidecarAdapter): Promise<void> {
+    await this.ios.dispose()
+    this.ios = next
+  }
 
   adapters(): DeviceAdapter[] {
     return [this.android, this.ios]

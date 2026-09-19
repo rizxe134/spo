@@ -4,7 +4,7 @@ Spo talks to a real Android phone by shelling to `adb`. It does not bundle platf
 
 ## 1. Computer
 
-1. Install [Android platform-tools](https://developer.android.com/tools/releases/platform-tools) so `adb` is on your `PATH`, or paste the full path in Spo → Prefs.
+1. Install [Android platform-tools](https://developer.android.com/tools/releases/platform-tools) so `adb` is on your `PATH`, or paste the full path in Spo → Prefs. Packaged Spo.app on macOS prepends Homebrew and `/usr/local/bin` because Dock launches do not use your Terminal PATH.
 2. On Linux, add udev rules (or the distro `android-sdk-platform-tools` package) so the phone is not stuck on `no permissions`.
 3. On Windows, install the Google USB driver or the OEM driver if `adb devices` never leaves `unauthorized`.
 

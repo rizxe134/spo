@@ -1,10 +1,11 @@
 import { spawn } from 'node:child_process'
+import { childEnv } from '../runtime-path'
 import type { CommandResult, CommandRunner } from './types'
 
 export class ProcessRunner implements CommandRunner {
   async run(file: string, args: string[], opts?: { timeoutMs?: number }): Promise<CommandResult> {
     return new Promise((resolve, reject) => {
-      const child = spawn(file, args, { windowsHide: true })
+      const child = spawn(file, args, { windowsHide: true, env: childEnv() })
       let stdout = ''
       let stderr = ''
       const timer = setTimeout(() => {

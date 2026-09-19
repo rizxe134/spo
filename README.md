@@ -68,26 +68,32 @@ npm test
 npm run dist:mac
 ```
 
-That compiles the Electron app and writes an unsigned package under `release/`:
+That compiles the Electron app and writes **only** an unsigned disk image:
 
-- `release/mac/Spo.app` or `release/mac-arm64/Spo.app` (Apple Silicon) / `release/mac-x64/Spo.app` (Intel)
 - `release/Spo-0.1.0-mac-arm64.dmg` (or the matching `x64` dmg)
+
+`dist:mac` is **dmg-only**. electron-builder still stages an unpacked `Spo.app` while it builds the image; the post-dist script then **deletes** that copy under `release/` and writes `release/.metadata_never_index`. Leave the leftover bundle in the repo and Launchpad will show **two** Spo apps (`/Applications/Spo.app` plus `release/mac-arm64/Spo.app`).
 
 The Dock / Applications icon is the 8-bit cyber-green ghost in `build/icon.png`. electron-builder turns that PNG into the macOS `.icns` when you run `dist:mac` on a Mac.
 
 Then:
 
-1. Open the `.dmg` **or** copy `Spo.app` into `/Applications`.
+1. Open the `.dmg` and drag Spo into **Applications**. Do not keep a second `Spo.app` next to the project.
 2. Because the app is unsigned, Gatekeeper may block the first launch. In Finder, **right-click Spo.app → Open**, then click Open.  
    If macOS still quarantines a download, you can also run:  
    `xattr -dr com.apple.quarantine /Applications/Spo.app`
 3. After that, Spo appears in Applications and Launchpad like any other app.
 
+If Launchpad already shows duplicates from an older build, delete the copy under `release/` (or run `npm run mac:hygiene`) and empty Launchpad’s extra icon, or log out and back in.
+
+Opening Spo from Applications / Dock uses a **minimal PATH**. Spo prepends `/opt/anaconda3/bin`, `/opt/homebrew/bin`, and `/usr/local/bin` before spawning ADB or Python, and it resolves Prefs `python3` to an interpreter that can `import pymobiledevice3` (for example `/opt/anaconda3/bin/python3`). You do not need a login shell for that. Paste an absolute interpreter in Prefs if you want to pin one; saving Prefs recreates the iOS adapter.
+
 Other scripts:
 
-- `npm run pack` — unpacked app directory for the **current** OS (`release/…/Spo.app` on a Mac)
-- `npm run dist` — installer for the **current** OS
-- `npm run dist:mac` — macOS `.app` + `.dmg` (run this on a Mac)
+- `npm run pack` — unpacked app directory for the **current** OS. On a Mac this leaves `release/…/Spo.app`, which Launchpad will index. Copy it to `/Applications` if you must, then run `npm run mac:hygiene` so the project copy is gone.
+- `npm run dist` — installer for the **current** OS (on a Mac: dmg, then the same hygiene strip)
+- `npm run dist:mac` — macOS `.dmg` only (run this on a Mac)
+- `npm run mac:hygiene` — strip any `Spo.app` still sitting under `release/`
 
 Do not treat a cloud or Linux `release/` folder as a Mac installer.
 

@@ -6,10 +6,12 @@ Developer location simulation goes through a [pymobiledevice3](https://github.co
 
 ## What this build does today
 
-- Probes `python3 -c "import pymobiledevice3"`
+- Probes `python3 -c "import pymobiledevice3"` (or the resolved interpreter)
 - If the module is missing: reports `missing` and lists no iPhones
 - If the module imports on Linux: reports `limited`. Discovery may still try `python3 -m pymobiledevice3 usbmux list`. **Set location refuses** with a message that DVT simulate-location needs a Mac
 - Wi-Fi handoff is not implemented for iOS
+
+macOS **GUI** launches (Applications, Dock, Launchpad) do not inherit your Terminal `PATH`. `/usr/bin/python3` usually has **no** pymobiledevice3 even when Anaconda or Homebrew Python does. Spo prepends `/opt/anaconda3/bin`, `/opt/homebrew/bin`, and `/usr/local/bin` for child processes, then picks the first existing interpreter that can import the sidecar when Prefs is still `python3`. Saving a new Python path in Prefs recreates the iOS adapter and rescans.
 
 The UI never pretends a location was applied when the sidecar cannot run.
 
@@ -24,7 +26,7 @@ The UI never pretends a location was applied when the sidecar cannot run.
    python3 -m pymobiledevice3 usbmux list
    ```
 
-4. Point Spo → Prefs → Python path at that interpreter if it is not `python3`.
+4. Leave Spo → Prefs → Python path as `python3` unless you want to pin an interpreter. If phones still do not appear from the Dock app, paste the working absolute path (for example `/opt/anaconda3/bin/python3`) and Save. `npm run dev` from a shell already had your full PATH; the packaged app does not.
 5. Commands Spo will call when `isAvailable()` is true:
 
    ```sh

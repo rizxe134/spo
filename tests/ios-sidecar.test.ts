@@ -159,4 +159,13 @@ describe('iOS sidecar hold session', () => {
     expect(result.ok).toBe(true)
     expect(result.message).toMatch(/Stopped the holding|clear/)
   })
+
+  it('dispose stops a held simulate-location process', async () => {
+    const holds = new FakeHolds()
+    const adapter = macAdapter(holds)
+    await adapter.setFixedLocation('UDID1', { lat: 1, lng: 2 })
+    await adapter.dispose()
+    expect(holds.last?.killed).toBe('SIGINT')
+    expect(holds.last?.alive).toBe(false)
+  })
 })

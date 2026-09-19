@@ -40,7 +40,7 @@ export const SETUP_PROFILES: SetupProfile[] = [
       {
         id: 'mac-iphone-sidecar',
         title: 'Install the pymobiledevice3 sidecar on macOS',
-        detail: 'Spo looks for `python3 -m pymobiledevice3`. See docs/ios-setup.md. The Linux environment cannot complete DVT location simulation.'
+        detail: 'Spo looks for pymobiledevice3 on several pythons, not only /usr/bin/python3. Packaged Spo.app has a short GUI PATH; it prepends Anaconda and Homebrew bins and can pick `/opt/anaconda3/bin/python3` when Prefs still says `python3`. See docs/ios-setup.md.'
       }
     ]
   },

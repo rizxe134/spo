@@ -44,7 +44,10 @@ export function SettingsDialog({
           <Field label="ADB path">
             <Input value={draft.adbPath} onChange={(event) => setDraft({ ...draft, adbPath: event.target.value })} />
           </Field>
-          <Field label="Python path (iOS sidecar)">
+          <Field
+            label="Python path (iOS sidecar)"
+            hint="Leave as python3 to auto-pick an interpreter that can import pymobiledevice3. Packaged Spo.app does not see a Terminal PATH — Homebrew and Anaconda bins are searched for you. Paste an absolute path to pin one."
+          >
             <Input
               value={draft.pythonPath}
               onChange={(event) => setDraft({ ...draft, pythonPath: event.target.value })}
@@ -69,11 +72,20 @@ export function SettingsDialog({
   )
 }
 
-function Field({ label, children }: { label: string; children: ReactNode }) {
+function Field({
+  label,
+  hint,
+  children
+}: {
+  label: string
+  hint?: string
+  children: ReactNode
+}) {
   return (
     <label className="block text-sm">
       <span className="mb-1 block text-xs text-muted uppercase">{label}</span>
       {children}
+      {hint ? <span className="mt-1 block text-xs text-muted">{hint}</span> : null}
     </label>
   )
 }

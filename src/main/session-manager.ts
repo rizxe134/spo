@@ -88,6 +88,10 @@ export class SessionManager {
     this.emit()
   }
 
+  async rescanDevices(): Promise<void> {
+    await this.pollDevices()
+  }
+
   selectDevice(deviceId: string): void {
     this.dispatch({ type: 'SELECT_DEVICE', deviceId })
   }

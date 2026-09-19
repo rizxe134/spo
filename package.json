@@ -12,9 +12,10 @@
     "start": "electron-vite preview",
     "preview": "vite --config vite.preview.config.ts",
     "build": "electron-vite build",
-    "pack": "electron-vite build && electron-builder --dir --publish never",
-    "dist": "electron-vite build && electron-builder --publish never",
-    "dist:mac": "electron-vite build && electron-builder --mac --publish never",
+    "pack": "electron-vite build && electron-builder --dir --publish never && node scripts/mac-release-hygiene.mjs",
+    "dist": "electron-vite build && electron-builder --publish never && node scripts/mac-release-hygiene.mjs --strip-unpacked",
+    "dist:mac": "electron-vite build && electron-builder --mac --publish never && node scripts/mac-release-hygiene.mjs --strip-unpacked",
+    "mac:hygiene": "node scripts/mac-release-hygiene.mjs --strip-unpacked",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -34,8 +35,7 @@
       "category": "public.app-category.utilities",
       "icon": "build/icon.png",
       "target": [
-        "dmg",
-        "dir"
+        "dmg"
       ],
       "identity": null,
       "hardenedRuntime": false,

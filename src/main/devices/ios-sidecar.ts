@@ -233,6 +233,12 @@ export class IosSidecarAdapter implements DeviceAdapter {
     }
   }
 
+  async dispose(): Promise<void> {
+    await stopHeld(this.held)
+    this.held = null
+    this.heldFix = null
+  }
+
   async startWifiHandoff(): Promise<WifiHandoffResult> {
     return {
       ok: false,

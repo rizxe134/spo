@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.5 — 2026-09-19
+
+- macOS `dist:mac` is dmg-only and strips leftover `release/**/Spo.app` so Launchpad does not show a second Spo
+- Packaged Spo.app augments PATH (Anaconda, Homebrew, `/usr/local/bin`) and resolves `python3` to an interpreter that can `import pymobiledevice3`
+- Prefs → Python path recreates the iOS sidecar adapter and rescans devices
+
 ## 0.1.4 — 2026-09-19
 
 - App icon: 8-bit cyber-green ghost pin (Dock / Applications via electron-builder, header, favicon)

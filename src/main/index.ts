@@ -4,7 +4,9 @@ import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 import { AndroidAdbAdapter } from './devices/android-adb'
 import { IosSidecarAdapter } from './devices/ios-sidecar'
 import { DeviceRegistry } from './devices/registry'
+import { ProcessRunner } from './devices/runner'
 import { planRoadRoute, searchPlaces } from './geo'
+import { applyAugmentedProcessPath, resolvePythonInterpreter } from './runtime-path'
 import { SessionManager } from './session-manager'
 import { JsonStore, storePath } from './store'
 import type { Coordinates, SavedPlace } from '../shared/types'
@@ -58,7 +60,23 @@ function createWindow(): BrowserWindow {
   return mainWindow
 }
 
-function attachIpc(current: SessionManager, currentStore: JsonStore): void {
+const pythonProbeRunner = new ProcessRunner()
+
+async function pythonHasSidecar(bin: string): Promise<boolean> {
+  try {
+    const result = await pythonProbeRunner.run(bin, ['-c', 'import pymobiledevice3'], { timeoutMs: 8_000 })
+    return result.code === 0
+  } catch {
+    return false
+  }
+}
+
+async function resolveIosPython(configured: string): Promise<string> {
+  const resolved = await resolvePythonInterpreter(configured || 'python3', pythonHasSidecar)
+  return resolved.python
+}
+
+function attachIpc(current: SessionManager, currentStore: JsonStore, registry: DeviceRegistry): void {
   ipcMain.handle('app:state', () => current.snapshot())
   ipcMain.handle('session:select', (_event, deviceId: string) => current.selectDevice(deviceId))
   ipcMain.handle('session:preview', (_event, coords: Coordinates) => current.preview(coords))
@@ -85,12 +103,22 @@ function attachIpc(current: SessionManager, currentStore: JsonStore): void {
     current.notify()
   })
   ipcMain.handle('places:remember', (_event, label: string) => current.rememberPreview(label))
-  ipcMain.handle('settings:update', (_event, patch: Partial<AppSettings>) => {
+  ipcMain.handle('settings:update', async (_event, patch: Partial<AppSettings>) => {
+    const prevPython = currentStore.snapshot.settings.pythonPath
     currentStore.updateSettings(patch)
+    if (patch.pythonPath !== undefined && patch.pythonPath !== prevPython) {
+      const next = new IosSidecarAdapter(await resolveIosPython(currentStore.snapshot.settings.pythonPath))
+      await registry.replaceIos(next)
+      await current.refreshAdapters()
+      await current.rescanDevices()
+    }
     current.notify()
   })
   ipcMain.handle('device:wifi', () => current.wifiHandoff())
-  ipcMain.handle('device:refresh', () => current.refreshAdapters())
+  ipcMain.handle('device:refresh', async () => {
+    await current.refreshAdapters()
+    await current.rescanDevices()
+  })
   ipcMain.handle('app:quit', async () => {
     const restored = await current.restore()
     return {
@@ -106,13 +134,14 @@ function emitState(snapshot: ReturnType<SessionManager['snapshot']>): void {
   window?.webContents.send('app:state', snapshot)
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  applyAugmentedProcessPath()
   store = new JsonStore(storePath(app.getPath('userData')))
   const android = new AndroidAdbAdapter(store.snapshot.settings.adbPath || 'adb')
-  const ios = new IosSidecarAdapter(store.snapshot.settings.pythonPath || 'python3')
+  const ios = new IosSidecarAdapter(await resolveIosPython(store.snapshot.settings.pythonPath || 'python3'))
   const registry = new DeviceRegistry(android, ios)
   manager = new SessionManager(registry, store, () => store?.snapshot.settings.speedMph ?? 45)
-  attachIpc(manager, store)
+  attachIpc(manager, store, registry)
   manager.onChange(emitState)
   manager.start()
   window = createWindow()
