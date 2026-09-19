@@ -11,6 +11,17 @@ This is original software written from scratch for personal use. It is inspired 
 
 License: MIT.
 
+## Download (macOS Apple Silicon)
+
+Get the ready-to-run app from **[Releases](https://github.com/rizxe134/spo/releases/tag/v0.1.0)**:
+
+1. Download `Spo-0.1.0-mac-arm64.dmg`
+2. Open the DMG and drag **Spo** to Applications
+3. First launch: right-click Spo → **Open** (unsigned build)
+
+Intel Macs / Windows: build from source for now (`npm run dist:mac` on the matching OS).
+
+
 ## What works in 0.1.0
 
 - Interactive OpenStreetMap map, Photon place search, draggable pin, lat/lng fields
