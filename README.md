@@ -25,7 +25,15 @@ Get the ready-to-run app from **[Releases](https://github.com/rizxe134/spo/relea
    ```
    Then open Spo again. (Or right-click → **Open** the first time.)
 
-Windows: build from source for now.
+### Windows
+
+From the same [Releases](https://github.com/rizxe134/spo/releases/tag/v0.1.0) page:
+
+1. Download `Spo-0.1.0-win-x64-setup.exe` (or the portable `.exe`)
+2. Run it / open Spo
+3. If SmartScreen appears: **More info** → **Run anyway** (unsigned build)
+
+Android over USB is the main Windows path; iPhone spoofing is best on a Mac.
 
 
 ## What works in 0.1.0

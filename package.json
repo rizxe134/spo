@@ -19,7 +19,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "dist:mac:intel": "electron-vite build && electron-builder --mac --x64 --publish never && node scripts/mac-release-hygiene.mjs --strip-unpacked",
-    "dist:mac:arm": "electron-vite build && electron-builder --mac --arm64 --publish never && node scripts/mac-release-hygiene.mjs --strip-unpacked"
+    "dist:mac:arm": "electron-vite build && electron-builder --mac --arm64 --publish never && node scripts/mac-release-hygiene.mjs --strip-unpacked",
+    "dist:win": "electron-vite build && electron-builder --win --x64 --publish never"
   },
   "build": {
     "appId": "com.spo.app",
@@ -57,8 +58,31 @@
     },
     "win": {
       "target": [
-        "dir"
-      ]
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Spo",
+      "artifactName": "${productName}-${version}-win-${arch}-setup.${ext}"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-win-${arch}-portable.${ext}"
     }
   },
   "dependencies": {
