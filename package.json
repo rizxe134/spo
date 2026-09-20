@@ -2,7 +2,7 @@
   "name": "spo",
   "productName": "Spo",
   "version": "0.1.0",
-  "description": "Spo — personal desktop app to pin a phone GPS location or play a road route over USB.",
+  "description": "Spo \u2014 personal desktop app to pin a phone GPS location or play a road route over USB.",
   "author": "Rishabh Kumar Singh",
   "license": "MIT",
   "type": "module",
@@ -17,12 +17,14 @@
     "dist:mac": "electron-vite build && electron-builder --mac --publish never && node scripts/mac-release-hygiene.mjs --strip-unpacked",
     "mac:hygiene": "node scripts/mac-release-hygiene.mjs --strip-unpacked",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "dist:mac:intel": "electron-vite build && electron-builder --mac --x64 --publish never && node scripts/mac-release-hygiene.mjs --strip-unpacked",
+    "dist:mac:arm": "electron-vite build && electron-builder --mac --arm64 --publish never && node scripts/mac-release-hygiene.mjs --strip-unpacked"
   },
   "build": {
     "appId": "com.spo.app",
     "productName": "Spo",
-    "copyright": "Copyright © 2026 Rishabh Kumar Singh",
+    "copyright": "Copyright \u00a9 2026 Rishabh Kumar Singh",
     "directories": {
       "output": "release"
     },

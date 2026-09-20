@@ -11,11 +11,13 @@ This is original software written from scratch for personal use. It is inspired 
 
 License: MIT.
 
-## Download (macOS Apple Silicon)
+## Download (macOS)
 
 Get the ready-to-run app from **[Releases](https://github.com/rizxe134/spo/releases/tag/v0.1.0)**:
 
-1. Download `Spo-0.1.0-mac-arm64.dmg`
+1. Download the matching DMG:
+   - Apple Silicon (M1/M2/M3/M4): `Spo-0.1.0-mac-arm64.dmg`
+   - Intel Mac: `Spo-0.1.0-mac-x64.dmg`
 2. Open the DMG and drag **Spo** to Applications
 3. If macOS says Spo is **“damaged”**, that’s Gatekeeper quarantine on an unsigned download — not a corrupt file. In Terminal run:
    ```sh
@@ -23,7 +25,7 @@ Get the ready-to-run app from **[Releases](https://github.com/rizxe134/spo/relea
    ```
    Then open Spo again. (Or right-click → **Open** the first time.)
 
-Intel Macs / Windows: build from source for now (`npm run dist:mac` on the matching OS).
+Windows: build from source for now.
 
 
 ## What works in 0.1.0
